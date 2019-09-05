@@ -1,6 +1,7 @@
 package br.com.fiap.aula03.entity;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "T_GRAVADORA")
@@ -14,6 +15,7 @@ public class Gravadora {
     private String nome;
     private boolean internacional;
     private double faturamento;
+    private LocalDate dataAbertura;
 
     public Gravadora() {
     }
@@ -55,5 +57,13 @@ public class Gravadora {
 
     public void setFaturamento(double faturamento) {
         this.faturamento = faturamento;
+    }
+
+    public LocalDate getDataAbertura() {
+        return dataAbertura;
+    }
+
+    public void setDataAbertura(LocalDate dataAbertura) {
+        this.dataAbertura = dataAbertura;
     }
 }

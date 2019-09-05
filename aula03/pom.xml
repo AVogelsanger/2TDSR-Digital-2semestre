@@ -6,12 +6,12 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.1.7.RELEASE</version>
-        <relativePath/> <!-- lookup parent from br.com.fiap.aula03.repository -->
+        <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>br.com.fiap</groupId>
-    <artifactId>aula03</artifactId>
+    <artifactId>gravadora</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>aula03</name>
+    <name>gravadora</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -58,6 +58,12 @@
             <artifactId>webjars-locator</artifactId>
             <version>0.30</version>
         </dependency>
+
+        <dependency>
+            <groupId>nz.net.ultraq.thymeleaf</groupId>
+            <artifactId>thymeleaf-layout-dialect</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

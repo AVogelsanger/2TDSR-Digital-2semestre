@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Gravadoras</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h2>Lista de Gravadoras</h2>
+
+    <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success"/>
+
+    <table class="table table-hover">
+        <tr>
+            <th>Nome</th>
+            <th>Faturamento</th>
+            <th>Internacional</th>
+            <th>Data Abertura</th>
+            <th></th>
+        </tr>
+        <tr th:each="grav:${gravadoras}">
+            <td th:text="${grav.nome}"></td>
+            <td th:text="${grav.faturamento}"></td>
+            <td th:text="${grav.internacional?'Sim':'Não'}"></td>
+            <td th:text="${#temporals.format(grav.dataAbertura,'dd/MM/yyy')}"></td>
+            <td>
+                <a th:href="@{/gravadora/editar/}+${grav.codigo}"
+                   class="btn btn-primary btn-sm">Editar</a>
+
+                <!-- Botão para acionar modal -->
+                <button th:onclick="|gravadoraId.value = ${grav.codigo}|" type="button" class="btn btn-danger btn-sm"
+                        data-toggle="modal" data-target="#modalExemplo">
+                    Excluir
+                </button>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Deseja realmente excluir a gravadora?
+                </div>
+                <div class="modal-footer">
+                    <form th:action="@{/gravadora/excluir}" method="post">
+                        <input type="hidden" name="codigo" id="gravadoraId">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                        <button type="submit" class="btn btn-danger">Sim</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
