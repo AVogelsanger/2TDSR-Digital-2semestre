@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Atletas</title>
+</head>
+<body>
+ <div layout:fragment="corpo">
+     <h2>Lista de Atletas</h2>
+     <div th:if="${msg != null}" class="alert alert-success" th:text="${msg}"></div>
+
+     <table class="table">
+         <tr>
+             <th>Nome</th>
+             <th>Data de Nascimento</th>
+             <th>Modalidades</th>
+             <th></th>
+             <th></th>
+             <th>Dep. Médico</th>
+         </tr>
+         <tr th:each="item:${atletas}">
+             <td th:text="${item.nome}"></td>
+             <td th:text="${#temporals.format(item.dataNascimento,'dd/MM/yyyy')}"></td>
+             <td th:text="${item.modalidade!=null?item.modalidade.nome:'Sem modalidade'}"></td>
+             <td>
+                 <a th:href="@{/atleta/editar/}+${item.codigo}" class="btn btn-outline-dark btn-sm">
+                     Editar
+                 </a>
+                 <!-- Botão para acionar modal de exclusão-->
+                 <button th:onclick="|codigoAtl.value = ${item.codigo}|" type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#modalExemplo">
+                     Excluir
+                 </button>
+             </td>
+             <td>
+                 <input disabled type="checkbox" th:value="${item.depMedico}">
+             </td>
+             <td>
+                 <!-- Button trigger modal -->
+                 <button th:onclick="|codigo.value = @item.codigo|" type="button" class="btn btn-outline-info btn-sm"
+                         data-toggle="modal" data-target="#exampleModal">
+                     Dep. Médico
+                 </button>
+             </td>
+         </tr>
+     </table>
+
+
+     <!-- Modal de exclusão -->
+     <div class="modal fade" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                         <span aria-hidden="true">&times;</span>
+                     </button>
+                 </div>
+                 <div class="modal-body">
+                     Deseja realmente excluir o atleta?
+                 </div>
+                 <div class="modal-footer">
+                     <form th:action="@{/atleta/excluir}" method="post">
+                         <input type="hidden" name="codigo" id="codigoAtl">
+                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                         <button type="submit" class="btn btn-danger">Sim</button>
+                     </form>
+                 </div>
+             </div>
+         </div>
+     </div>
+
+
+     <!-- Modal de detalhes -->
+     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                         <span aria-hidden="true">&times;</span>
+                     </button>
+                 </div>
+                 <div class="modal-body">
+                     Confirme se o jogador está no departamento médico?
+                 </div>
+                 <div class="modal-footer">
+                     <form th:action="@{/atleta/lesionar}" method="post">
+                         <input name="codigo" type="hidden" id="codigo">
+                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                         <button type="submit" class="btn btn-primary">Sim</button>
+                     </form>
+                 </div>
+             </div>
+         </div>
+     </div>
+
+ </div>
+</body>
+</html>

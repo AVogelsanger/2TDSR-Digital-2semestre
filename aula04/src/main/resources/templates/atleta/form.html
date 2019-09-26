@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Atleta</title>
+</head>
+<body>
+    <div layout:fragment="corpo">
+        <h1>Cadastro de Atleta</h1>
+
+        <div class="alert alert-success"
+             th:if="${msg !=null}" th:text="${msg}"></div>
+
+        <form th:action="@{/atleta/cadastrar}" th:object="${atleta}" method="post">
+            <div class="form-group">
+                <label for="nome">Nome</label>
+                <input th:field="*{nome}" id="nome" class="form-control">
+            </div>
+            <div>
+                <label for="dataNasc">Data de Nascimento</label>
+                <input th:field="*{dataNascimento}" id="dataNasc" class="form-control">
+            </div>
+            <div>
+                <label>Modalidade</label>
+                <select th:field="*{modalidade.codigo}" class="form-control">
+                    <option value="0">Selecione</option>
+                    <option th:each="m:${modalidades}"
+                            th:text="${m.nome}"
+                            th:value="${m.codigo}"></option>
+                </select>
+            </div>
+            <input type="submit" value="Salvar" class="btn btn-primary">
+        </form>
+    </div>
+</body>
+</html>

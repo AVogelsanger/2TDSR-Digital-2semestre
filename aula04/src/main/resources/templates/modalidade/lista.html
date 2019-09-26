@@ -10,11 +10,14 @@
  <div layout:fragment="corpo">
 
     <h2>Modalidades</h2>
+    <div th:if="${msg != null}" class="alert alert-success" th:text="${msg}"></div>
+
     <table class="table">
         <tr>
             <th>Nome</th>
             <th>Individual</th>
             <th>Data</th>
+            <th></th>
             <th></th>
         </tr>
         <tr th:each="item:${modalidades}">
@@ -25,14 +28,18 @@
                 <a th:href="@{/modalidade/editar/}+${item.codigo}"
                    class="btn btn-outline-primary btn-sm">Editar</a>
                 <!-- Botão para acionar modal -->
-                <button th:onclick="|codigoMod.value = ${item.codigo}|" type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#modalExemplo">
+                <button th:onclick="|codigoMod.value = ${item.codigo}|" type="button"
+                        class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#modalExemplo">
                     Excluir
                 </button>
+            </td>
+            <td>
+                <a class="btn btn-outline-dark btn-sm" th:href="@{/modalidade/detalhes/} + ${item.codigo}">Detalhes</a>
             </td>
         </tr>
     </table>
 
-     <!-- Modal -->
+     <!-- Modal de exclusão -->
      <div class="modal fade" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
          <div class="modal-dialog" role="document">
              <div class="modal-content">

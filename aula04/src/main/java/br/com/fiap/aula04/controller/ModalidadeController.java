@@ -1,6 +1,7 @@
 package br.com.fiap.aula04.controller;
 
 import br.com.fiap.aula04.model.Modalidade;
+import br.com.fiap.aula04.repository.AtletaRepository;
 import br.com.fiap.aula04.repository.ModalidadeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,9 @@ public class ModalidadeController {
     @Autowired
     private ModalidadeRepository repository;
 
+    @Autowired
+    private AtletaRepository atletaRep;
+
     @GetMapping("cadastrar")
     public String cadastrar(Modalidade modalidade){
         return "modalidade/form";
@@ -25,9 +29,9 @@ public class ModalidadeController {
 
     @PostMapping("salvar")
     public String salvar(Modalidade modalidade, RedirectAttributes redirect){
-        redirect.addFlashAttribute("msg", "Modalidade cadastrado com sucesso!");
         repository.save(modalidade);
-        return "redirect:/modalidade/listar";
+        redirect.addFlashAttribute("msg", "Modalidade cadastrado com sucesso!");
+        return "redirect:/modalidade/cadastrar";
     }
 
     @GetMapping("listar")
@@ -47,6 +51,13 @@ public class ModalidadeController {
         redirect.addFlashAttribute("msg", "Modalidade excluída com sucesso!");
         repository.deleteById(codigo);
         return "redirect:/modalidade/listar";
+    }
+
+    @GetMapping("detalhes/{id}")
+    public String detalhar(@PathVariable("id") int codigo, Model model){
+        model.addAttribute("modalidade", repository.findById(codigo).get());
+        model.addAttribute("atletas", atletaRep.findByModalidade_Codigo(codigo));
+        return "modalidade/detalhes";
     }
 
 }

@@ -4,16 +4,18 @@
                 layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8">
-    <title>Cadastro de Modalidade</title>
+    <title>Modalidade</title>
 </head>
 <body>
 
     <div layout:fragment="corpo">
+        <h1>Cadastro de Modalidade</h1>
+
         <div class="alert alert-success"
              th:if="${msg !=null}" th:text="${msg}"></div>
 
         <form th:action="@{/modalidade/salvar}" method="post" th:object="${modalidade}">
-            <input th:field="*{codigo}" type="hidden">
+            <!-- <input th:field="*{codigo}" type="hidden"> -->
             <div class="form-group">
                 <label>Nome</label>
                 <input th:field="*{nome}" class="form-control" type="text">
