@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Pedido</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h1>Cliente</h1>
+    <!-- <div th:if="${status != null}" class="alert alert-success" th:text="${status}"></div> -->
+
+    <table class="table table-striped">
+        <tr>
+            <th>Nome</th>
+            <th>E-mail</th>
+            <th>Data de nascimento</th>
+            <th>CPF</th>
+        </tr>
+
+        <tr>
+            <td th:text="${cliente.nome}"></td>
+            <td th:text="${cliente.email}"></td>
+            <td th:text="${#temporals.format(cliente.dataNascimento, 'dd/MM/yyyy')}"></td>
+            <td th:text="${cliente.cpf}"></td>
+        </tr>
+    </table>
+
+    <h2>Pedido</h2>
+    <form th:object="${pedido}" th:action="@{/pedido/cadastrar}" method="post">
+
+        <input type="hidden" th:field="*{cliente.codigo}">
+
+        <div class="form-group">
+            <label>Data do pedido</label>
+            <input class="form-control" th:field="*{data}" type="date">
+            <p class="alert alert-danger mt-2" th:errors="*{data}"></p>
+        </div>
+
+        <div class="form-group">
+            <label>Nome do produto</label>
+            <input class="form-control" th:field="*{produto}" type="text">
+            <p class="alert alert-danger mt-2" th:errors="*{produto}"></p>
+        </div>
+
+        <div class="form-group">
+            <label>Valor</label>
+            <input class="form-control" th:field="*{valor}" type="text">
+            <p class="alert alert-danger mt-2" th:errors="*{valor}"></p>
+        </div>
+
+        <input type="submit" value="Cadastrar" class="btn btn-success">
+    </form>
+</div>
+</body>
+</html>
