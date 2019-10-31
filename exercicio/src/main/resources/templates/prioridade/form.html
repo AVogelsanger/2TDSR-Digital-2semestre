@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Prioridade</title>
+
+
+</head>
+<body>
+
+<div layout:fragment="conteudo">
+    <form th:action="@{/prioridade/cadastrar}" th:object="${prioridade}" method="post">
+
+        <h2>Cadastro de Prioridade</h2>
+        <div class="alert alert-success" th:if="${msg !=null}" th:text="${msg}"></div>
+
+        <input th:field="*{codigo}" type="hidden">
+        <div class="form-group">
+            <label for="nome">Nome</label>
+            <input th:field="*{nome}" id="nome" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="nivel">Nivel</label>
+            <input th:field="*{nivel}" id="nivel" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="descricao">Descrição</label>
+            <input th:field="*{descricao}" id="descricao" class="form-control">
+        </div>
+
+        <div>
+        <button class="btn btn-outline-primary btn-sm">Cadastrar</button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
